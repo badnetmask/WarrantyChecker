@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/WarrantyChecker/WarrantyChecker.iml" filepath="$PROJECT_DIR$/WarrantyChecker/WarrantyChecker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WarrantyCheckerProject.iml" filepath="$PROJECT_DIR$/WarrantyCheckerProject.iml" />
+    </modules>
+  </component>
+</project>
+
