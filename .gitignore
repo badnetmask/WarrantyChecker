@@ -30,5 +30,6 @@ proguard/
 .idea/tasks.xml
 
 # Gradle project files
+build/
 .gradle
 
