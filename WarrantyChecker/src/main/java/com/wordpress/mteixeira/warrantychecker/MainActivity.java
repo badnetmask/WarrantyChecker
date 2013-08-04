@@ -21,6 +21,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -105,7 +106,7 @@ public class MainActivity extends Activity {
                 if(Build.MODEL.equals("sdk")) {
                     // this is an emulator!
                     // add a barcode representation here to test
-                    extractLaptopData("5P8VLC1");
+                    extractLaptopData("XXXXXXX");
                     new FetchWarrantyTask().execute();
                 } else {
                     // this is a real device!
@@ -244,20 +245,26 @@ public class MainActivity extends Activity {
                 } else {
                     Gson gson = JsonUtil.getGson();
                     DellWarranty dell = gson.fromJson(webData, DellWarranty.class);
-                    laptopModel = dell.getGetAssetWarrantyResponse().getGetAssetWarrantyResult().getResponse().getDellAsset().getMachineDescription().split(",")[0];
-                    List<Warranty> warrantyList = dell.getGetAssetWarrantyResponse().getGetAssetWarrantyResult().getResponse().getDellAsset().getWarranties().getWarranty();
-                    if(warrantyList.size() == 1) {
-                        // if there is only one warranty information (usually, INITIAL)
-                        warrantyAsString = warrantyList.get(0).getEndDate().toString();
-                    } else {
-                        // if there is more than one (usually, EXTENDED), look for the highest
-                        Date warranty = warrantyList.get(0).getEndDate();
-                        for(Warranty temp : warrantyList) {
-                            if(temp.getEndDate().after(warranty)) {
-                                warranty = temp.getEndDate();
+                    if(dell.getGetAssetWarrantyResponse().getGetAssetWarrantyResult().Faults == null) {
+                        laptopModel = dell.getGetAssetWarrantyResponse().getGetAssetWarrantyResult().getResponse().getDellAsset().getMachineDescription().split(",")[0];
+                        List<Warranty> warrantyList = dell.getGetAssetWarrantyResponse().getGetAssetWarrantyResult().getResponse().getDellAsset().getWarranties().getWarranty();
+                        if(warrantyList.size() == 1) {
+                            // if there is only one warranty information (usually, INITIAL)
+                            warrantyAsString = warrantyList.get(0).getEndDate().toString();
+                        } else {
+                            // if there is more than one (usually, EXTENDED), look for the highest
+                            Date warranty = warrantyList.get(0).getEndDate();
+                            for(Warranty temp : warrantyList) {
+                                if(temp.getEndDate().after(warranty)) {
+                                    warranty = temp.getEndDate();
+                                }
                             }
+                            warrantyAsString = new SimpleDateFormat("yyyy-MM-dd").format(warranty);
                         }
-                        warrantyAsString = new SimpleDateFormat("yyyy-MM-dd").format(warranty);
+                    } else {
+                        // FRAGMENTS!
+                        //DialogFragment almd = new AlertMessageDialog(dell.getGetAssetWarrantyResponse().getGetAssetWarrantyResult().getFaults().getFaultException().getMessage());
+                        //almd.show(getFragmentManager().getFragment().getS);
                     }
                 }
             } else if(laptopManufacturer.equals("IBM")) {

@@ -18,6 +18,7 @@ package com.wordpress.mteixeira.warrantychecker;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -25,21 +26,16 @@ import android.support.v4.app.DialogFragment;
 /**
  * Created by mteixeir on 7/17/13.
  */
-public class MessageDialog extends DialogFragment {
-    public static String message;
+public class AlertMessageDialog extends DialogFragment {
+    private static String message;
 
-    static MessageDialog newInstance(String incomingMessage) {
-        MessageDialog m = new MessageDialog();
-        Bundle args = new Bundle();
-        args.putString("message", incomingMessage);
-        m.setArguments(args);
-        return m;
+    public AlertMessageDialog(String incomingMessage) {
+        message = incomingMessage;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        message = getArguments().getString("message");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(message)
                 .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {

@@ -17,43 +17,25 @@
 package com.wordpress.mteixeira.warrantychecker.dell;
 
 /**
- * Created by mteixeir on 7/19/13.
+ * Created by mteixeir on 7/27/13.
  */
-public class GetAssetWarrantyResult {
-    public String a;
-    public String i;
-    public Faults Faults;
-    public Response Response;
+public class FaultException {
+    public int Code;
+    public String Message;
 
-    public void setA(String a) {
-        this.a = a;
+    public int getCode() {
+        return Code;
     }
 
-    public String getA() {
-        return a;
+    public void setCode(int code) {
+        Code = code;
     }
 
-    public void setI(String i) {
-        this.i = i;
+    public String getMessage() {
+        return Message;
     }
 
-    public String getI() {
-        return i;
-    }
-
-    public void setFaults(Faults faults) {
-        this.Faults = faults;
-    }
-
-    public Faults getFaults() {
-        return Faults;
-    }
-
-    public void setResponse(Response response) {
-        this.Response = response;
-    }
-
-    public Response getResponse() {
-        return Response;
+    public void setMessage(String message) {
+        Message = message;
     }
 }
